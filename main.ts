@@ -21,12 +21,12 @@ input.onButtonPressed(Button.A, function () {
     displayLedMap()
 })
 radio.onReceivedString(function (receivedString) {
-    if (receivedString == "gridMode") {
-        rowToReceive = 0
-    }
+	
 })
 radio.onReceivedValue(function (name, value) {
-	
+    if (name == "gridMode") {
+        rowToReceive = 0
+    }
 })
 function initVariables () {
     numColumns = 0
