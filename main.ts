@@ -1,12 +1,12 @@
 function displayLedMap () {
     i = 0
     j = 0
-    numRows = ledMap.length
-    numColumns = ledMap[0].length
+    numRows = 8
+    numColumns = 8
     while (i < numRows) {
         while (j < numColumns) {
-            colourIndex = 0
-            tileDisplay.setMatrixColor(j, i, colours[0])
+            colourIndex = colourOrder.indexOf(ledMap[j][i])
+            tileDisplay.setMatrixColor(i, j, colours[colourIndex])
             j += 1
         }
         j = 0
@@ -16,6 +16,9 @@ function displayLedMap () {
 }
 radio.onReceivedNumber(function (receivedNumber) {
 	
+})
+input.onButtonPressed(Button.A, function () {
+    displayLedMap()
 })
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "gridMode") {
@@ -63,21 +66,24 @@ function initVariables () {
     Kitronik_Zip_Tile.colors(ZipLedColors.Yellow)
     ]
 }
-let colourOrder: string[] = []
 let rowToReceive = 0
 let colours: number[] = []
+let ledMap: string[] = []
+let colourOrder: string[] = []
 let colourIndex = 0
 let numColumns = 0
-let ledMap: string[] = []
 let numRows = 0
 let j = 0
 let i = 0
 let tileDisplay: Kitronik_Zip_Tile.ZIPTileDisplay = null
+initVariables()
 radio.setGroup(1)
 tileDisplay = Kitronik_Zip_Tile.createZIPTileDisplay(1, 1, Kitronik_Zip_Tile.UBitLocations.Hidden)
+tileDisplay.setBrightness(15)
+tileDisplay.showRainbow(1, 360)
+basic.pause(1000)
 tileDisplay.clear()
 tileDisplay.show()
-tileDisplay.setBrightness(20)
 basic.forever(function () {
 	
 })
