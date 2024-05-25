@@ -1,8 +1,8 @@
 function displayLedMap () {
+    tileDisplay.clear()
+    tileDisplay.show()
     i = 0
     j = 0
-    numRows = 8
-    numColumns = 8
     while (i < numRows) {
         while (j < numColumns) {
             colourIndex = colourOrder.indexOf(ledMap[j][i])
@@ -14,32 +14,55 @@ function displayLedMap () {
     }
     tileDisplay.show()
 }
-radio.onReceivedNumber(function (receivedNumber) {
-	
-})
 input.onButtonPressed(Button.A, function () {
     displayLedMap()
 })
 radio.onReceivedString(function (receivedString) {
-	
+    if (receivedString == "ledMapTx") {
+        mode = receivedString
+    }
+    if (receivedString == "updateLeds") {
+        displayLedMap()
+    }
+})
+input.onButtonPressed(Button.B, function () {
+    ledMap[0] = "wowrwowo"
+    displayLedMap()
 })
 radio.onReceivedValue(function (name, value) {
-    if (name == "gridMode") {
-        rowToReceive = 0
+    if (mode == "ledMapTx") {
+        ledMap[value] = name
     }
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    tileDisplay.clear()
+    tileDisplay.show()
 })
 function initVariables () {
     numColumns = 0
     rowToReceive = 0
+    mode = "idle"
+    numRows = 8
+    numColumns = 8
     ledMap = [
-    "b00r0000",
-    "0b0r0000",
-    "00br0000",
-    "000i0000",
-    "wwwpbwww",
-    "000r0b00",
-    "yyyoyygy",
-    "000r000b"
+    "wwwwwwww",
+    "wwwwwwww",
+    "wwwwwwww",
+    "wwwwwwww",
+    "wwwwwwww",
+    "wwwwwwww",
+    "wwwwwwww",
+    "wwwwwwww"
+    ]
+    initLedMap = [
+    "bbbbbbbb",
+    "bbbbbbbb",
+    "bbbbbbbb",
+    "bbbbbbbb",
+    "bbbbbbbb",
+    "bbbbbbbb",
+    "bbbbbbbb",
+    "bbbbbbbb"
     ]
     colourOrder = [
     "r",
@@ -66,7 +89,9 @@ function initVariables () {
     Kitronik_Zip_Tile.colors(ZipLedColors.Yellow)
     ]
 }
+let initLedMap: string[] = []
 let rowToReceive = 0
+let mode = ""
 let colours: number[] = []
 let ledMap: string[] = []
 let colourOrder: string[] = []
@@ -79,11 +104,12 @@ let tileDisplay: Kitronik_Zip_Tile.ZIPTileDisplay = null
 initVariables()
 radio.setGroup(1)
 tileDisplay = Kitronik_Zip_Tile.createZIPTileDisplay(1, 1, Kitronik_Zip_Tile.UBitLocations.Hidden)
-tileDisplay.setBrightness(15)
+tileDisplay.setBrightness(10)
 tileDisplay.showRainbow(1, 360)
-basic.pause(1000)
+basic.pause(500)
 tileDisplay.clear()
 tileDisplay.show()
+displayLedMap()
 basic.forever(function () {
 	
 })
