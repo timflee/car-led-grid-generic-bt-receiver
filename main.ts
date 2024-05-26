@@ -18,6 +18,8 @@ input.onButtonPressed(Button.A, function () {
     displayLedMap()
 })
 radio.onReceivedString(function (receivedString) {
+    serial.writeLine(receivedString)
+    radio.sendString(receivedString)
     if (receivedString == "ledMapTx") {
         mode = receivedString
     }
@@ -30,8 +32,14 @@ input.onButtonPressed(Button.B, function () {
     displayLedMap()
 })
 radio.onReceivedValue(function (name, value) {
+    serial.writeLine("" + value + " " + name)
+    radio.sendValue(name, value)
     if (mode == "ledMapTx") {
         ledMap[value] = name
+    }
+    if (name == "bright") {
+        tileDisplay.setBrightness(value)
+        tileDisplay.show()
     }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
@@ -106,10 +114,6 @@ radio.setGroup(1)
 tileDisplay = Kitronik_Zip_Tile.createZIPTileDisplay(1, 1, Kitronik_Zip_Tile.UBitLocations.Hidden)
 tileDisplay.setBrightness(10)
 tileDisplay.showRainbow(1, 360)
-basic.pause(500)
-tileDisplay.clear()
-tileDisplay.show()
-displayLedMap()
 basic.forever(function () {
 	
 })
