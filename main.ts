@@ -26,6 +26,7 @@ input.onButtonPressed(Button.A, function () {
     displayLedMap()
 })
 function flash (n: number, period: number) {
+    music.play(music.builtinPlayableSoundEffect(soundExpression.hello), music.PlaybackMode.InBackground)
     for (let index = 0; index < n; index++) {
         tileDisplay.setBrightness(maxBrightness)
         tileDisplay.show()
@@ -34,6 +35,7 @@ function flash (n: number, period: number) {
         tileDisplay.show()
         basic.pause(period / 2)
     }
+    music.play(music.tonePlayable(988, music.beat(BeatFraction.Sixteenth)), music.PlaybackMode.UntilDone)
 }
 radio.onReceivedString(function (receivedString) {
     serial.writeLine(receivedString)
