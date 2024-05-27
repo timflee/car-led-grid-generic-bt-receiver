@@ -35,7 +35,7 @@ function flash (n: number, period: number) {
         tileDisplay.show()
         basic.pause(period / 2)
     }
-    music.play(music.tonePlayable(988, music.beat(BeatFraction.Sixteenth)), music.PlaybackMode.UntilDone)
+    music.play(music.tonePlayable(988, music.beat(BeatFraction.Half)), music.PlaybackMode.UntilDone)
 }
 radio.onReceivedString(function (receivedString) {
     serial.writeLine(receivedString)
